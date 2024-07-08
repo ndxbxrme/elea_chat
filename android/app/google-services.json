@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "432030463924",
+    "project_id": "elea-c",
+    "storage_bucket": "elea-c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432030463924:android:80d6e95f47712d60c424e1",
+        "android_client_info": {
+          "package_name": "com.example.elea_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANQb6gAnKB0Fqg9FsjuPOVwFmNS5rD-SA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
