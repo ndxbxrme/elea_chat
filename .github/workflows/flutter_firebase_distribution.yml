@@ -143,13 +143,6 @@ jobs:
         if: matrix.os == 'macos-latest'
         run: sed -i -e 's/platform :ios, .*/platform :ios, '12.0'/g' ios/Podfile
 
-      - name: Install CocoaPods dependencies
-        if: matrix.os == 'macos-latest'
-        run: |
-          cd ios
-          pod repo update
-          pod install
-
       - name: Build iOS
         if: matrix.os == 'macos-latest'
         run: flutter build ios --release --no-codesign
