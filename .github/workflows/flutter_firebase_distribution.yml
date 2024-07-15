@@ -22,7 +22,7 @@ jobs:
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
 
     steps:
-      - name: Show FIREBASE_TOKEN
-        run: echo $FIREBASE_TOKEN
+      - name: Show hello
+        run: echo hello
 
  
