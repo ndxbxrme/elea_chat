@@ -22,7 +22,6 @@ jobs:
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
 
     steps:
-      - name: Show ANDROID_KEY_ALIAS
-        run: echo $ANDROID_KEY_ALIAS
+      - name: test keystore
+        run: echo "${ANDROID_KEYSTORE}"
 
- 
