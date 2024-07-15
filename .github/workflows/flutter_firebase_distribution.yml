@@ -34,7 +34,7 @@ jobs:
 
       - name: Check Java version
         run: java -version
-        
+
       - name: Decode keystore
         run: echo "${ANDROID_KEYSTORE}" | base64 --decode > my-release-key.jks
 
@@ -84,6 +84,9 @@ jobs:
         with:
           flutter-version: '3.19.5'
 
+      - name: Run flutter doctor
+        run: flutter doctor --verbose
+        
       - name: Install dependencies
         run: flutter pub get
 
