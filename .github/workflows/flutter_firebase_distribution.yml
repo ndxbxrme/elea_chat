@@ -91,7 +91,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --release --scan
+        run: flutter build apk --release
 
       - name: Build iOS
         if: runner.os == 'macOS'
