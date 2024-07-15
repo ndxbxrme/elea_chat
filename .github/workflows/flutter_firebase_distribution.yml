@@ -31,6 +31,9 @@ jobs:
           distribution: 'zulu'
           java-version: '21'
 
+      - name: Show keystore
+        run: echo $ANDROID_KEYSTORE
+
       - name: Decode keystore
         run: echo $ANDROID_KEYSTORE | base64 --decode > elea_test_keystore.jks
 
