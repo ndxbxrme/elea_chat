@@ -32,6 +32,9 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Check Java version
+        run: java -version
+        
       - name: Decode keystore
         run: echo "${ANDROID_KEYSTORE}" | base64 --decode > my-release-key.jks
 
@@ -83,7 +86,7 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
-        
+
       - name: Build APK
         run: flutter build apk --release
 
