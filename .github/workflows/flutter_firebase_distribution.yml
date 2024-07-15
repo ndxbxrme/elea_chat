@@ -22,7 +22,7 @@ jobs:
       ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
 
     steps:
-      - name: Show hello
-        run: echo hello
+      - name: Show github.ref
+        run: echo github.ref
 
  
