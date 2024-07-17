@@ -54,15 +54,19 @@ android {
 
     signingConfigs {
         release {
-            keyAlias System.getenv('ANDROID_KEY_ALIAS')
-            keyPassword System.getenv('ANDROID_KEY_PASSWORD')
-            storeFile file(System.getenv('ANDROID_KEYSTORE_PATH'))
-            storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
+            if (System.getenv('ANDROID_KEYSTORE_PATH') != null) {
+                keyAlias System.getenv('ANDROID_KEY_ALIAS')
+                keyPassword System.getenv('ANDROID_KEY_PASSWORD')
+                storeFile file(System.getenv('ANDROID_KEYSTORE_PATH'))
+                storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD')
+            }
         }
     }
     buildTypes {
         release {
-            signingConfig signingConfigs.release
+            if (signingConfigs.release.storeFile != null) {
+                signingConfig signingConfigs.release
+            }
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

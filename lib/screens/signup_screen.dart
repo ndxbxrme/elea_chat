@@ -56,11 +56,14 @@ class _SignupScreenState extends State<SignupScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text('Please Log In',
+                  style: Theme.of(context).textTheme.bodyLarge),
               if (_loginError != null)
                 Padding(
                   padding: Constants.horizontalPadding,
                   child: Text(_loginError!),
                 ),
+              SizedBox(height: 20),
               Padding(
                 padding: Constants.horizontalPadding,
                 child: EleaTextBox(
