@@ -8,11 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     environment: ${{ github.ref == 'refs/heads/live' && 'live' || 'test' }}
 
@@ -31,14 +27,15 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Java
-        if: matrix.os == 'ubuntu-latest'
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Check Java version
+        run: java -version
+
       - name: Decode keystore
-        if: matrix.os == 'ubuntu-latest'
         run: echo "${ANDROID_KEYSTORE}" | base64 --decode > my-release-key.jks
 
       - name: Create firebase_options.dart
@@ -93,12 +90,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Clean project
-        run: flutter clean
-
       - name: Build APK
-        if: matrix.os == 'ubuntu-latest'
         run: flutter build apk --release
+
+      - name: Build iOS
+        if: runner.os == 'macOS'
+        run: flutter build ios --release
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -109,61 +106,16 @@ jobs:
         run: npm install -g firebase-tools
 
       - name: Distribute to Firebase App Distribution (Android)
-        if: matrix.os == 'ubuntu-latest'
         run: |
           firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
             --app $ANDROID_FIREBASE_APP_ID \
             --token $FIREBASE_TOKEN \
             --groups testers
 
-      - name: Decode and import certificate
-        if: matrix.os == 'macos-latest'
-        env:
-          IOS_CERTIFICATE: ${{ secrets.IOS_CERTIFICATE }}
-          IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
-        run: |
-          echo $IOS_CERTIFICATE | base64 --decode > ios_certificate.p12
-          security create-keychain -p "" build.keychain
-          security import ios_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P $IOS_CERTIFICATE_PASSWORD -A
-          security list-keychains -s ~/Library/Keychains/build.keychain
-          security default-keychain -s ~/Library/Keychains/build.keychain
-          security unlock-keychain -p "" ~/Library/Keychains/build.keychain
-          security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
-
-      - name: Install provisioning profile
-        if: matrix.os == 'macos-latest'
-        env:
-          IOS_PROVISIONING_PROFILE: ${{ secrets.IOS_PROVISIONING_PROFILE }}
-        run: |
-          echo $IOS_PROVISIONING_PROFILE | base64 --decode > provisioning_profile.mobileprovision
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-
-      - name: Set up Xcode workspace
-        if: matrix.os == 'macos-latest'
-        run: |
-          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          sudo xcodebuild -license accept
-
-      - name: Build iOS
-        if: matrix.os == 'macos-latest'
-        env:
-          DEVELOPMENT_TEAM_ID: ${{ secrets.DEVELOPMENT_TEAM_ID }}
-        run: flutter build ios --release --no-codesign
-
-      - name: Archive and export iOS build
-        if: matrix.os == 'macos-latest'
-        run: |
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath build/Runner.xcarchive -teamID $DEVELOPMENT_TEAM_ID
-          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/Runner
-
       - name: Distribute to Firebase App Distribution (iOS)
-        if: matrix.os == 'macos-latest'
-        env:
-          IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        if: runner.os == 'macOS'
         run: |
-          firebase appdistribution:distribute build/Runner/Runner.ipa \
+          firebase appdistribution:distribute build/ios/ipa/Runner.ipa \
             --app $IOS_FIREBASE_APP_ID \
             --token $FIREBASE_TOKEN \
             --groups testers

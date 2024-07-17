@@ -50,12 +50,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text('Sign up',
-              style: Theme.of(context).textTheme.headlineMedium),
-        ),
-      ),
       body: Form(
         key: _formKey,
         child: Center(
@@ -108,15 +102,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   // Navigate to SignupScreen when the button is pressed
                   _validateAndSave();
                 },
-                child: const Text('Log In'),
+                child: const Text('Sign up'),
               ),
               const SizedBox(height: 20),
               InkWell(
                 onTap: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupScreen()));
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
                 },
-                child: Text("Sign up"),
+                child: Text("Log in"),
               ),
             ],
           ),

@@ -39,12 +39,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child:
-              Text('Login', style: Theme.of(context).textTheme.headlineMedium),
-        ),
-      ),
       body: Form(
         key: _formKey,
         child: Center(
