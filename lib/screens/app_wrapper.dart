@@ -80,9 +80,9 @@ class _AppWrapperState extends State<AppWrapper> with TickerProviderStateMixin {
                           Provider.of<NotificationController>(context,
                               listen: false);
                       notificationController.setId(userId);
-                      return MainAppScreen(action: widget.action);
+                      //return MainAppScreen(action: widget.action);
                       return onboardingComplete
-                          ? const MainAppScreen()
+                          ? MainAppScreen(action: widget.action)
                           : const OnboardingScreen();
                     } else {
                       return const LoginScreen();
