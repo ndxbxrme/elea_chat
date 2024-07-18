@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elea_chat/components/avatar_upload_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +13,12 @@ import 'topics_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String userId;
-  const ProfileScreen({super.key, required this.userId});
+  final Map<String, dynamic>? myProfile;
+  const ProfileScreen({
+    super.key,
+    required this.userId,
+    this.myProfile,
+  });
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -40,11 +47,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
         final Map<String, dynamic> userProfile =
             snapshot.data!.data() as Map<String, dynamic>;
         userProfile["id"] = widget.userId;
+        final Random random = Random();
+        userProfile["rnd"] = random.nextInt(999999);
         final bool isOwner =
             widget.userId == FirebaseAuth.instance.currentUser?.uid;
         return Scaffold(
           appBar: EleaAppBar(
             title: userProfile["fullname"],
+            userProfile: userProfile,
           ),
           body: GestureDetector(
             onTap: () {
@@ -57,8 +67,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: isOwner
                         ? AvatarUploadWidget(
                             avatarUrl:
-                                "https://firebasestorage.googleapis.com/v0/b/elea-c.appspot.com/o/avatars%2F${userProfile["id"]}.jpg?alt=media&token=80fe8000-73f5-4273-b6bb-85615fa168cf",
-                            onAvatarChanged: (text) {},
+                                "https://firebasestorage.googleapis.com/v0/b/elea-c.appspot.com/o/avatars%2F${userProfile["id"]}.jpg?alt=media&token=80fe8000-73f5-4273-b6bb-85615fa168cf&rnd=${userProfile["rnd"]}",
+                            onAvatarChanged: (value) async {
+                              userProfile["avatarUrl"] = value;
+                              try {
+                                await FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(userProfile["id"])
+                                    .update({
+                                  "avatarUrl": userProfile["avatarUrl"],
+                                });
+                                userProfile["rnd"] = random.nextInt(999999);
+
+                                widget.myProfile?["rnd"] = userProfile["rnd"];
+
+                                await FirebaseFirestore.instance
+                                    .collection('notifications')
+                                    .add({
+                                  'userId': userProfile["id"],
+                                  'screen': 'avatar',
+                                  'timestamp': Timestamp.now(),
+                                });
+                              } catch (e) {
+                                print("bad error $e");
+                              }
+                            },
                           )
                         : AvatarWidget(userId: widget.userId, radius: 100.0),
                   ),

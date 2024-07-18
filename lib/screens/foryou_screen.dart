@@ -14,7 +14,10 @@ class ForYouScreen extends StatefulWidget {
   late String selectedTopic;
   final Map<String, dynamic> userProfile;
 
-  ForYouScreen({this.selectedTopic = 'All topics', required this.userProfile});
+  ForYouScreen({
+    this.selectedTopic = 'All topics',
+    required this.userProfile,
+  });
 
   @override
   _ForYouScreenState createState() => _ForYouScreenState();
@@ -148,6 +151,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
       appBar: EleaAppBar(
         title: 'For You',
         username: widget.userProfile["username"],
+        userProfile: widget.userProfile,
       ),
       body: Column(
         children: [

@@ -71,12 +71,6 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
       _lastDocument = querySnapshot.docs.last;
     }
 
-    print('Initial docs length ${querySnapshot.docs.length}');
-    for (var doc in querySnapshot.docs) {
-      print('Initial message timestamp: ${doc['timestamp']}');
-      print('Initial message text: ${doc['text']}');
-    }
-
     setState(() {
       _messages = querySnapshot.docs;
       _hasMoreMessages = querySnapshot.docs.length == _pageSize;
@@ -87,7 +81,6 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
   }
 
   Future<void> _loadMoreMessages() async {
-    print('load more messages');
     if (_lastDocument == null) return;
 
     setState(() {
@@ -108,11 +101,6 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
       _lastDocument = querySnapshot.docs.last;
     } else {
       _lastDocument = null; // No more messages to load
-    }
-
-    print('More docs length ${querySnapshot.docs.length}');
-    for (var doc in querySnapshot.docs) {
-      print('More message timestamp: ${doc['timestamp']}');
     }
 
     setState(() {
@@ -142,7 +130,6 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              print('snapshot has data');
               // Add new messages to the beginning of the list
               final newMessages = snapshot.data!.docs;
               _messages.insertAll(

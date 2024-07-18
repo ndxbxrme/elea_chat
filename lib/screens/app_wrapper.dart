@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +10,7 @@ import 'login_screen.dart';
 import 'main_app_screen.dart';
 import 'onboarding_screen.dart';
 import 'splash_screen.dart';
+import 'dart:math';
 
 class AppWrapper extends StatefulWidget {
   final String? action;
@@ -74,16 +76,40 @@ class _AppWrapperState extends State<AppWrapper> with TickerProviderStateMixin {
                       return const SizedBox.shrink();
                     } else if (authSnapshot.hasData) {
                       final userId = authSnapshot.data!.uid;
-                      final onboardingComplete =
-                          prefs.getBool('$userId-onboardingComplete') ?? false;
                       NotificationController notificationController =
                           Provider.of<NotificationController>(context,
                               listen: false);
                       notificationController.setId(userId);
                       //return MainAppScreen(action: widget.action);
-                      return onboardingComplete
-                          ? MainAppScreen(action: widget.action)
-                          : const OnboardingScreen();
+                      return FutureBuilder<
+                          DocumentSnapshot<Map<String, dynamic>>>(
+                        future: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(FirebaseAuth.instance.currentUser?.uid)
+                            .get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return SizedBox.shrink();
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: Text('Error: ${snapshot.error}'));
+                          } else if (!snapshot.hasData) {
+                            return const OnboardingScreen();
+                          } else {
+                            final userProfile = snapshot.data?.data();
+                            if (userProfile == null) {
+                              return const OnboardingScreen();
+                            }
+                            userProfile?["id"] = userId;
+                            final Random random = Random();
+                            userProfile?["rnd"] = random.nextInt(999999);
+                            return MainAppScreen(
+                                action: widget.action,
+                                userProfile: userProfile!);
+                          }
+                        },
+                      );
                     } else {
                       return const LoginScreen();
                     }

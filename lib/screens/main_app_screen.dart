@@ -14,7 +14,8 @@ import 'foryou_screen.dart';
 
 class MainAppScreen extends StatefulWidget {
   final String? action;
-  const MainAppScreen({super.key, this.action});
+  final Map<String, dynamic> userProfile;
+  const MainAppScreen({super.key, this.action, required this.userProfile});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -102,56 +103,39 @@ class _MainAppScreenState extends State<MainAppScreen> {
     return PopScope(
       onPopInvoked: _onPopInvoked,
       child: Scaffold(
-        body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-            future: FirebaseFirestore.instance
-                .collection("users")
-                .doc(FirebaseAuth.instance.currentUser?.uid)
-                .get(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return SizedBox.shrink();
-              } else if (snapshot.hasError) {
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else if (!snapshot.hasData) {
-                return Center(child: Text('User profile not found'));
-              } else {
-                final userProfile = snapshot.data?.data();
-                userProfile?["id"] = FirebaseAuth.instance.currentUser?.uid;
-                return Stack(
-                  children: [
-                    IndexedStack(
-                      index: _currentIndex,
-                      children: <Widget>[
-                        _buildNavigator(0, userProfile!),
-                        _buildNavigator(1, userProfile),
-                        _buildNavigator(2, userProfile),
+        body: Stack(
+          children: [
+            IndexedStack(
+              index: _currentIndex,
+              children: <Widget>[
+                _buildNavigator(0, widget.userProfile),
+                _buildNavigator(1, widget.userProfile),
+                _buildNavigator(2, widget.userProfile),
+              ],
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: IgnorePointer(
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFFD8D3D3)!
+                            .withOpacity(0.0), // Transparent color
+                        Color(0xFFD8D3D3)!, // Solid gray color
                       ],
                     ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: IgnorePointer(
-                        child: Container(
-                          height: 40,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color(0xFFD8D3D3)!
-                                    .withOpacity(0.0), // Transparent color
-                                Color(0xFFD8D3D3)!, // Solid gray color
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              }
-            }),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
         bottomNavigationBar: _buildBottomNavigationBar(),
       ),
     );

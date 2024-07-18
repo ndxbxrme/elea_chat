@@ -34,8 +34,6 @@ class NotificationController with ChangeNotifier {
             .map((doc) => EleaNotification.fromFirestore(doc))
             .toList();
         _notificationStreamController.add(_notifications);
-        print('Notifications updated:');
-        print('current screen $_currentScreen');
 
         // Update badge counts
         _connectionsBadgeCount = _notifications
@@ -48,7 +46,6 @@ class NotificationController with ChangeNotifier {
         int _currentScreenNotifications =
             _notifications.where((n) => n.screen == _currentScreen).length;
         if (_currentScreenNotifications > 0) {
-          print('csn: $_currentScreen');
           removeNotification(_currentScreen);
         }
         // Detect new chat notifications for a different screen
@@ -56,8 +53,6 @@ class NotificationController with ChangeNotifier {
             _notifications.map((n) => n.id).toList();
         bool hasNewChatNotification = _notifications.any(
             (n) => n.screen.startsWith("chats") && n.screen != _currentScreen);
-        print(
-            'has new chat: $hasNewChatNotification, first fetch: $_isFirstFetch');
         if (hasNewChatNotification && !_isFirstFetch) {
           await _playNotificationSound();
         }
@@ -66,7 +61,6 @@ class NotificationController with ChangeNotifier {
         // Update previous notification IDs
         _previousNotificationIds = currentNotificationIds;
       } else {
-        print('No notifications found.');
         _notifications = [];
         _notificationStreamController.add([]);
         _connectionsBadgeCount = 0;
@@ -74,14 +68,12 @@ class NotificationController with ChangeNotifier {
       }
       notifyListeners();
     }, onError: (error) {
-      print('Error fetching notifications: $error');
       _notificationStreamController.addError(error);
     });
   }
 
   Future<void> _playNotificationSound() async {
     try {
-      print('playing notification');
       await _audioPlayer.play(AssetSource('sounds/notification_sound2.wav'));
     } catch (e) {
       print('Error playing notification sound: $e');
@@ -97,7 +89,6 @@ class NotificationController with ChangeNotifier {
   List<EleaNotification> get notifications => _notifications;
 
   void removeNotification(String screen) {
-    print('screen, $screen - current screen $_currentScreen');
     _notifications
         .where((notification) => notification.screen.startsWith(screen))
         .forEach((notification) {
@@ -106,7 +97,6 @@ class NotificationController with ChangeNotifier {
   }
 
   void setCurrentScreen(String screen) {
-    print('set current screen, $screen');
     _currentScreen = screen;
   }
 

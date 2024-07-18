@@ -30,7 +30,11 @@ class ForumPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: EleaAppBar(title: 'For You', username: userProfile["username"]),
+      appBar: EleaAppBar(
+        title: 'For You',
+        username: userProfile["username"],
+        userProfile: userProfile,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -202,11 +206,14 @@ class ForumPostScreen extends StatelessWidget {
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => ForumPostScreen(
-                                          postId: document.id,
-                                          userProfile: userProfile)));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ForumPostScreen(
+                                    postId: document.id,
+                                    userProfile: userProfile,
+                                  ),
+                                ),
+                              );
                             },
                             child: Padding(
                               padding:

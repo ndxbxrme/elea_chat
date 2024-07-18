@@ -13,6 +13,7 @@ import '../components/username_text_box.dart';
 import 'signup_screen.dart';
 import 'main_app_screen.dart';
 import '../constants.dart';
+import '../app_router.dart';
 
 class OnboardingData {
   String username;
@@ -119,76 +120,85 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       bottomSheet: Container(
         width: double.infinity,
         decoration: BoxDecoration(color: Colors.white),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-          child: _currentPage == 1
-              ? TextButton(
-                  onPressed: () async {
-                    // Submit the info
-                    if (_validateAndSave()) {
-                      try {
-                        await _firestore
-                            .collection('users')
-                            .doc(FirebaseAuth.instance.currentUser?.uid)
-                            .set(
-                          {
-                            'username': _data.username,
-                            'fullname': _data.fullname,
-                            'dob': _data.dob,
-                            'gender': _data.gender,
-                            'county': _data.county,
-                            'topics': _data.topics?.toList()
-                          },
-                          SetOptions(merge: true),
-                        );
-                      } catch (error) {}
-                      final user = FirebaseAuth.instance.currentUser;
-                      if (user != null) {
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool(
-                            '${user.uid}-onboardingComplete', true);
-                      }
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MainAppScreen()),
-                      );
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 20),
-                  ),
-                  child: const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-                    child: const Text("Done"),
-                  ),
-                )
-              : TextButton(
-                  onPressed: () {
-                    // Submit the info
-                    if (_validateAndSave()) {
-                      _markPageAsCompleted(_currentPage + 1);
-                      _data.acceptedTOS = true;
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.ease,
-                      );
-                    }
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 20),
-                  ),
-                  child: const Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
-                    child: Text("Get Started"),
-                  ),
-                ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20.0),
+              child: _currentPage == 1
+                  ? TextButton(
+                      onPressed: () async {
+                        // Submit the info
+                        if (_validateAndSave()) {
+                          try {
+                            await _firestore
+                                .collection('users')
+                                .doc(FirebaseAuth.instance.currentUser?.uid)
+                                .set(
+                              {
+                                'username': _data.username,
+                                'fullname': _data.fullname,
+                                'dob': _data.dob,
+                                'gender': _data.gender,
+                                'county': _data.county,
+                                'topics': _data.topics?.toList()
+                              },
+                              SetOptions(merge: true),
+                            );
+                          } catch (error) {}
+                          final user = FirebaseAuth.instance.currentUser;
+                          if (user != null) {
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool(
+                                '${user.uid}-onboardingComplete', true);
+                          }
+                          router.push('/main/main');
+                          //router.pushNamed('/main/main');
+                          /*Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MainAppScreen()),
+                          );*/
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        textStyle: TextStyle(fontSize: 20),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 20.0),
+                        child: const Text("Done"),
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () {
+                        // Submit the info
+                        if (_validateAndSave()) {
+                          _markPageAsCompleted(_currentPage + 1);
+                          _data.acceptedTOS = true;
+                          _pageController.nextPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.ease,
+                          );
+                        }
+                      },
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.orange,
+                        foregroundColor: Colors.white,
+                        textStyle: TextStyle(fontSize: 20),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 8.0, horizontal: 20.0),
+                        child: Text("Get Started"),
+                      ),
+                    ),
+            ),
+            SizedBox(height: 20),
+          ],
         ),
       ),
     );

@@ -285,6 +285,7 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
     return Scaffold(
       appBar: EleaAppBar(
         title: "Connections",
+        userProfile: widget.userProfile,
         username: widget.userProfile["username"],
       ),
       body: DefaultTabController(

@@ -28,7 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
     return null;
   }
 
-  _validateAndSave() async {
+  _validateAndSave(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       try {
@@ -36,6 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
           email: _email,
           password: _password,
         );
+        Navigator.pop(context);
       } on Exception catch (e) {
         // TODO
         setState(() {
@@ -103,7 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ElevatedButton(
                 onPressed: () async {
                   // Navigate to SignupScreen when the button is pressed
-                  _validateAndSave();
+                  _validateAndSave(context);
                 },
                 child: const Text('Sign up'),
               ),

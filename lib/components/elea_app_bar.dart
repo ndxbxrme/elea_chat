@@ -1,19 +1,30 @@
+import 'package:elea_chat/components/notification_controller.dart';
 import 'package:elea_chat/screens/new_forum_post_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../screens/profile_screen.dart';
 import 'avatar_widget.dart';
+import 'notification_class.dart';
 
 class EleaAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
   final String userId = FirebaseAuth.instance.currentUser!.uid;
   final String username;
-  EleaAppBar({required this.title, this.actions, this.username = ""});
+  final Map<String, dynamic>? userProfile;
+  EleaAppBar({
+    required this.title,
+    this.actions,
+    this.username = "",
+    this.userProfile,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final NotificationController notificationController =
+        Provider.of<NotificationController>(context, listen: false);
     return Scaffold(
       body: Stack(
         children: [
@@ -48,6 +59,7 @@ class EleaAppBar extends StatelessWidget implements PreferredSizeWidget {
                               MaterialPageRoute(
                                 builder: (context) => ProfileScreen(
                                   userId: userId,
+                                  myProfile: userProfile,
                                 ),
                               ),
                             );
@@ -67,9 +79,20 @@ class EleaAppBar extends StatelessWidget implements PreferredSizeWidget {
                           child: Text('Log out'),
                         ),
                       ],
-                      child: AvatarWidget(
-                        userId: userId,
-                      ),
+                      child: StreamBuilder<List<EleaNotification>>(
+                          stream: notificationController.notificationsStream,
+                          builder: (context, snapshot) {
+                            return Badge(
+                              alignment: Alignment.bottomLeft,
+                              isLabelVisible:
+                                  userProfile?["avatarUrl"] == null ||
+                                      userProfile?["bio"] == null,
+                              child: AvatarWidget(
+                                userId: userId,
+                                currentRandom: userProfile?["rnd"],
+                              ),
+                            );
+                          }),
                     ),
                   ],
                 ),

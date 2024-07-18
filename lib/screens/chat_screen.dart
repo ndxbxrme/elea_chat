@@ -13,14 +13,18 @@ import '../text_theme_extension.dart';
 class ChatScreen extends StatelessWidget {
   final Map<String, dynamic> userProfile;
   final String? action;
-  const ChatScreen({super.key, required this.userProfile, this.action});
+  const ChatScreen({
+    super.key,
+    required this.userProfile,
+    this.action,
+  });
 
   @override
   Widget build(BuildContext context) {
-    print('chat screen: $action');
     return Scaffold(
       appBar: EleaAppBar(
         title: "Chat",
+        userProfile: userProfile,
         username: userProfile["username"],
       ),
       body: DefaultTabController(
@@ -152,35 +156,31 @@ class ChatListPage extends StatelessWidget {
                       children: [
                         ListTile(
                           leading: StreamBuilder<List<EleaNotification>>(
-                              stream:
-                                  notificationController.notificationsStream,
-                              builder: (context, snapshot) {
-                                int badgeCount = 0;
-                                if (snapshot.hasData &&
-                                    snapshot.data!.isNotEmpty) {
-                                  badgeCount = snapshot.data!
-                                      .where((n) => n.screen
-                                          .startsWith("chats_${chat.id}"))
-                                      .length;
-                                } else {
-                                  badgeCount = notificationController
-                                      .notifications
-                                      .where((n) => n.screen
-                                          .startsWith("chats_${chat.id}"))
-                                      .length;
-                                  print('badge count $badgeCount');
-                                }
-                                return Badge(
-                                  isLabelVisible: badgeCount > 0,
-                                  alignment: Alignment.topLeft,
-                                  child: AvatarWidget(
-                                    userId: friendId,
-                                  ),
-                                );
-                                return AvatarWidget(
+                            stream: notificationController.notificationsStream,
+                            builder: (context, snapshot) {
+                              int badgeCount = 0;
+                              if (snapshot.hasData &&
+                                  snapshot.data!.isNotEmpty) {
+                                badgeCount = snapshot.data!
+                                    .where((n) =>
+                                        n.screen.startsWith("chats_${chat.id}"))
+                                    .length;
+                              } else {
+                                badgeCount = notificationController
+                                    .notifications
+                                    .where((n) =>
+                                        n.screen.startsWith("chats_${chat.id}"))
+                                    .length;
+                              }
+                              return Badge(
+                                isLabelVisible: badgeCount > 0,
+                                alignment: Alignment.topLeft,
+                                child: AvatarWidget(
                                   userId: friendId,
-                                );
-                              }),
+                                ),
+                              );
+                            },
+                          ),
                           title: Text(
                             friend?["fullname"],
                             style: Theme.of(context).textTheme.bodyLarge,

@@ -154,6 +154,7 @@ class ChatMessageWidget extends StatelessWidget {
                                   AvatarWidget(
                                     radius: 12.0,
                                     userId: messageUserId,
+                                    currentRandom: 0,
                                   ),
                                 ],
                               ),
