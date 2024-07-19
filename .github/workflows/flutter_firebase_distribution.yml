@@ -131,6 +131,31 @@ jobs:
           security unlock-keychain -p "" ~/Library/Keychains/build.keychain
           security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
 
+      - name: Create Exportoptions.plist
+        run:  |
+          cat <<EOF > ios/ExportOptions.plist
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+              <key>compileBitcode</key>
+              <false/>
+              <key>destination</key>
+              <string>export</string>
+              <key>method</key>
+              <string>ad-hoc</string>
+              <key>signingStyle</key>
+              <string>manual</string>
+              <key>stripSwiftSymbols</key>
+              <true/>
+              <key>teamID</key>
+              <string>${{ secrets.DEVELOPMENT_TEAM_ID }}</string>
+              <key>thinning</key>
+              <string>&lt;none&gt;</string>
+          </dict>
+          </plist>
+          EOF
+
       - name: Install provisioning profile
         if: matrix.os == 'macos-latest'
         env:
@@ -155,8 +180,17 @@ jobs:
         env:
           DEVELOPMENT_TEAM_ID: ${{ secrets.DEVELOPMENT_TEAM_ID }}
         run: |
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath build/Runner.xcarchive DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM_ID
-          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/Runner
+          set -e
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath build/Runner.xcarchive DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM_ID | xcpretty
+          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/Runner | xcpretty
+
+      - name: Check build artifacts
+        if: matrix.os == 'macos-latest'
+        run: |
+          if [ ! -f build/Runner/Runner.ipa ]; then
+            echo "Error: Runner.ipa not found"
+            exit 1
+          fi
 
       - name: Distribute to Firebase App Distribution (iOS)
         if: matrix.os == 'macos-latest'
