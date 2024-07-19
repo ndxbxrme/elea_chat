@@ -167,8 +167,10 @@ jobs:
 
       - name: Set Development Team in Xcode project
         if: matrix.os == 'macos-latest'
+        env:
+          DEVELOPMENT_TEAM_ID: ${{ secrets.DEVELOPMENT_TEAM_ID }}
         run: |
-          plutil -replace "objects.97C146E61CF9000F007C117D.attributes.TargetAttributes.1.DevelopmentTeam" -string "${{ secrets.DEVELOPMENT_TEAM_ID }}" ios/Runner.xcodeproj/project.pbxproj
+          plutil -replace "objects.97C146E61CF9000F007C117D.attributes.TargetAttributes.1.DevelopmentTeam" -string "$DEVELOPMENT_TEAM_ID" ios/Runner.xcodeproj/project.pbxproj
           plutil -replace "objects.97C146E61CF9000F007C117D.attributes.TargetAttributes.1.ProvisioningStyle" -string "Manual" ios/Runner.xcodeproj/project.pbxproj
 
 
