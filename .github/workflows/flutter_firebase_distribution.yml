@@ -173,16 +173,7 @@ jobs:
 
       - name: Build iOS
         if: matrix.os == 'macos-latest'
-        run: flutter build ios --release --no-codesign
-
-      - name: Archive and export iOS build
-        if: matrix.os == 'macos-latest'
-        env:
-          DEVELOPMENT_TEAM_ID: ${{ secrets.DEVELOPMENT_TEAM_ID }}
-        run: |
-          set -e
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner archive -archivePath build/Runner.xcarchive DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM_ID | xcpretty
-          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportOptionsPlist ios/ExportOptions.plist -exportPath build/Runner | xcpretty
+        run: flutter build ios --release --export-options-plist=ios/ExportOptions.plist
 
       - name: Check build artifacts
         if: matrix.os == 'macos-latest'
