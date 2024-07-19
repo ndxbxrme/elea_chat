@@ -165,6 +165,13 @@ jobs:
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
+      - name: Set Development Team in Xcode project
+        if: matrix.os == 'macos-latest'
+        run: |
+          plutil -replace "attributes.TargetAttributes.1.DevelopmentTeam" -string "${{ secrets.DEVELOPMENT_TEAM_ID }}" ios/Runner.xcodeproj/project.pbxproj
+          plutil -replace "attributes.TargetAttributes.1.ProvisioningStyle" -string "Manual" ios/Runner.xcodeproj/project.pbxproj
+
+
       - name: Set up Xcode workspace
         if: matrix.os == 'macos-latest'
         run: |
