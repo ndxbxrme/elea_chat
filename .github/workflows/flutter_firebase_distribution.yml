@@ -173,7 +173,7 @@ jobs:
 
       - name: Build iOS
         if: matrix.os == 'macos-latest'
-        run: flutter build ios --release --export-options-plist=ios/ExportOptions.plist
+        run: flutter build ios --release
 
       - name: Check build artifacts
         if: matrix.os == 'macos-latest'
