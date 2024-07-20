@@ -10,6 +10,12 @@ jobs:
   build:
     runs-on: macos-latest
 
+    env:
+      IOS_CERTIFICATE: ${{ secrets.IOS_CERTIFICATE }}
+      IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+      IOS_PROVISIONING_PROFILE: ${{ secrets.IOS_PROVISIONING_PROFILE }}
+      IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -21,15 +27,15 @@ jobs:
 
     - name: Decrypt and install provisioning profile
       run: |
-        echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > provisioning_profile.mobileprovision
+        echo "$IOS_PROVISIONING_PROFILE" | base64 --decode > provisioning_profile.mobileprovision
         mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
         cp provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
     - name: Decrypt and install certificate
       run: |
-        echo "${{ secrets.IOS_CERTIFICATE }}" | base64 --decode > ios_certificate.p12
+        echo "$IOS_CERTIFICATE" | base64 --decode > ios_certificate.p12
         security create-keychain -p "" build.keychain
-        security import ios_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -A
+        security import ios_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "$IOS_CERTIFICATE_PASSWORD" -A
         security list-keychain -d user -s ~/Library/Keychains/build.keychain
         security unlock-keychain -p "" ~/Library/Keychains/build.keychain
         security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
