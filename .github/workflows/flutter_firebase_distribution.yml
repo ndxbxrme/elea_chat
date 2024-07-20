@@ -24,8 +24,8 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Clean project
-      run: flutter clean
+    = name: Check generated
+      run: cat ios/Flutter/Generated.xcconfig
 
     - name: Decrypt and install provisioning profile
       run: |
