@@ -8,191 +8,52 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
-
-    environment: ${{ github.ref == 'refs/heads/live' && 'live' || 'test' }}
-
-    env:
-      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-      ANDROID_FIREBASE_APP_ID: ${{ secrets.ANDROID_FIREBASE_APP_ID }}
-      IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
-      ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
-      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-      ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/my-release-key.jks
+    runs-on: macos-latest
 
     steps:
-        
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Java
-        if: matrix.os == 'ubuntu-latest'
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.19.5'
 
-      - name: Decode keystore
-        if: matrix.os == 'ubuntu-latest'
-        run: echo "${ANDROID_KEYSTORE}" | base64 --decode > my-release-key.jks
+    - name: Decrypt and install provisioning profile
+      run: |
+        echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > provisioning_profile.mobileprovision
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        cp provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
 
-      - name: Create firebase_options.dart
-        run: |
-          cat <<EOF > lib/firebase_options.dart
-          import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
-          import 'package:flutter/foundation.dart'
-              show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    - name: Decrypt and install certificate
+      run: |
+        echo "${{ secrets.IOS_CERTIFICATE }}" | base64 --decode > ios_certificate.p12
+        security create-keychain -p "" build.keychain
+        security import ios_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -A
+        security list-keychain -d user -s ~/Library/Keychains/build.keychain
+        security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
 
-          class DefaultFirebaseOptions {
-            static FirebaseOptions get currentPlatform {
-              switch (defaultTargetPlatform) {
-                case TargetPlatform.android:
-                  return android;
-                case TargetPlatform.iOS:
-                  return ios;
-                default:
-                  throw UnsupportedError(
-                    'DefaultFirebaseOptions are not supported for this platform.',
-                  );
-              }
-            }
+    - name: Install CocoaPods dependencies
+      run: |
+        cd ios
+        pod install
 
-            static const FirebaseOptions android = FirebaseOptions(
-              apiKey: '${{ secrets.ANDROID_API_KEY }}',
-              appId: '${{ secrets.ANDROID_FIREBASE_APP_ID }}',
-              messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
-              projectId: '${{ secrets.FIREBASE_PROJECT_ID }}',
-              storageBucket: '${{ secrets.FIREBASE_STORAGE_BUCKET }}',
-            );
+    - name: Build iOS app
+      run: flutter build ios --release --no-codesign
 
-            static const FirebaseOptions ios = FirebaseOptions(
-              apiKey: '${{ secrets.IOS_API_KEY }}',
-              appId: '${{ secrets.IOS_FIREBASE_APP_ID }}',
-              messagingSenderId: '${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}',
-              projectId: '${{ secrets.FIREBASE_PROJECT_ID }}',
-              storageBucket: '${{ secrets.FIREBASE_STORAGE_BUCKET }}',
-              iosBundleId: '${{ secrets.IOS_BUNDLE_ID }}',
-            );
-          }
+    - name: Archive iOS app
+      run: |
+        xcodebuild -workspace ios/Runner.xcworkspace \
+        -scheme Runner \
+        -sdk iphoneos \
+        -configuration Release \
+        -archivePath $PWD/build/Runner.xcarchive \
+        archive
 
-          EOF
-
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.19.5'
-
-      - name: Run flutter doctor
-        run: flutter doctor --verbose
-        
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Clean project
-        run: flutter clean
-
-      - name: Build APK
-        if: matrix.os == 'ubuntu-latest'
-        run: flutter build apk --release
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.18.0'
-
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: Distribute to Firebase App Distribution (Android)
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
-            --app $ANDROID_FIREBASE_APP_ID \
-            --token $FIREBASE_TOKEN \
-            --groups testers
-
-      # Install the Apple certificate and provisioning profile 
-      - name: Install the Apple certificate and provisioning profile
-        env:
-          BUILD_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE }}
-          P12_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
-          BUILD_PROVISION_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE }}
-          KEYCHAIN_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
-        run: |
-          # create variables
-          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
-          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
-          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
-          # import certificate and provisioning profile from secrets
-          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode > $CERTIFICATE_PATH
-          echo -n "$BUILD_PROVISION_PROFILE_BASE64" | base64 --decode > $PP_PATH
-          # create temporary keychain
-          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
-          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
-          # import certificate to keychain
-          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
-          security list-keychain -d user -s $KEYCHAIN_PATH
-          # apply provisioning profile
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
-
-      - name: Create Exportoptions.plist
-        run:  |
-          cat <<EOF > ios/Runner/ExportOptions.plist
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-              <key>compileBitcode</key>
-              <false/>
-              <key>destination</key>
-              <string>export</string>
-              <key>method</key>
-              <string>ad-hoc</string>
-              <key>signingStyle</key>
-              <string>manual</string>
-              <key>stripSwiftSymbols</key>
-              <true/>
-              <key>teamID</key>
-              <string>${{ secrets.DEVELOPMENT_TEAM_ID }}</string>
-              <key>thinning</key>
-              <string>&lt;none&gt;</string>
-          </dict>
-          </plist>
-          EOF
-
-      - name: Set up Xcode workspace
-        if: matrix.os == 'macos-latest'
-        run: |
-          sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
-          sudo xcodebuild -license accept
-
-      - name: Build iOS
-        if: matrix.os == 'macos-latest'
-        run: flutter build ios --release
-
-      - name: Check build artifacts
-        if: matrix.os == 'macos-latest'
-        run: |
-          if [ ! -f build/Runner/Runner.ipa ]; then
-            echo "Error: Runner.ipa not found"
-            exit 1
-          fi
-
-      - name: Distribute to Firebase App Distribution (iOS)
-        if: matrix.os == 'macos-latest'
-        env:
-          IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          firebase appdistribution:distribute build/Runner/Runner.ipa \
-            --app $IOS_FIREBASE_APP_ID \
-            --token $FIREBASE_TOKEN \
-            --groups testers
+    - name: Export iOS app
+      run: |
+        xcodebuild -exportArchive \
+        -archivePath $PWD/build/Runner.xcarchive \
+        -exportOptionsPlist ios/Runner/ExportOptions.plist \
+        -exportPath $PWD/build
