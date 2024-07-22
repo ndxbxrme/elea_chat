@@ -1,4 +1,4 @@
-package com.example.elea_chat
+package com.eleaapp.elea
 
 import io.flutter.embedding.android.FlutterActivity
 
