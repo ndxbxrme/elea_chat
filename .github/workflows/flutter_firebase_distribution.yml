@@ -56,6 +56,10 @@ jobs:
         }
 
         EOF
+    - name: Set up Xcode
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '15.0'
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
@@ -101,6 +105,11 @@ jobs:
             <string>export</string>
             <key>method</key>
             <string>ad-hoc</string>
+            <key>provisioningProfiles</key>
+            <dict>
+                <key>com.eleaapp.elea</key>
+                <string>Elea App Provisioning Profile - Dev</string>
+            </dict>
             <key>signingStyle</key>
             <string>manual</string>
             <key>stripSwiftSymbols</key>
@@ -112,7 +121,7 @@ jobs:
         </dict>
         </plist>
         EOF
-        
+
     - name: Build iOS app
       run: flutter build ios --release --no-codesign
 
@@ -123,11 +132,11 @@ jobs:
         -sdk iphoneos \
         -configuration Release \
         -archivePath $PWD/build/Runner.xcarchive \
-        archive | xcpretty
+        archive | xcpretty --no-utf
 
     - name: Export iOS app
       run: |
         xcodebuild -exportArchive \
         -archivePath $PWD/build/Runner.xcarchive \
         -exportOptionsPlist ios/Runner/ExportOptions.plist \
-        -exportPath $PWD/build | xcpretty
+        -exportPath $PWD/build | xcpretty --no-utf
