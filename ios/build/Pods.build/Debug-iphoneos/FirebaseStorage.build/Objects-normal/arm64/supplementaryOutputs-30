@@ -1,0 +1,18 @@
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseStorage/FirebaseStorage/Sources/StorageConstants.swift":
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageConstants.dia"
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageConstants.swiftconstvalues"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageConstants.swiftdeps"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageConstants.o"
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageConstants.d"
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseStorage/FirebaseStorage/Sources/Internal/StorageDeleteTask.swift":
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDeleteTask.dia"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDeleteTask.o"
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDeleteTask.d"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDeleteTask.swiftdeps"
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDeleteTask.swiftconstvalues"
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseStorage/FirebaseStorage/Sources/StorageComponent.swift":
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageComponent.swiftconstvalues"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageComponent.swiftdeps"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageComponent.o"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageComponent.dia"
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageComponent.d"

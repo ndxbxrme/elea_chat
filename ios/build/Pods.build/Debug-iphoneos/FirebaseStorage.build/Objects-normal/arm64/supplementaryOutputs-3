@@ -1,0 +1,18 @@
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseStorage/FirebaseStorage/Sources/StorageError.swift":
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageError.swiftconstvalues"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageError.o"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageError.swiftdeps"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageError.dia"
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageError.d"
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseStorage/FirebaseStorage/Sources/Internal/StorageGetDownloadURLTask.swift":
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.d"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.swiftdeps"
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.swiftconstvalues"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.dia"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageGetDownloadURLTask.o"
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseStorage/FirebaseStorage/Sources/StorageDownloadTask.swift":
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDownloadTask.d"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDownloadTask.o"
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDownloadTask.swiftconstvalues"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDownloadTask.swiftdeps"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseStorage.build/Objects-normal/arm64/StorageDownloadTask.dia"

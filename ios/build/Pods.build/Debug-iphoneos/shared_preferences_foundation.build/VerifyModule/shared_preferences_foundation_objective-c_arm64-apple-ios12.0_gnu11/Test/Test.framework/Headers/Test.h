@@ -1,0 +1,2 @@
+#import <shared_preferences_foundation/shared_preferences_foundation-Swift.h>
+#import <shared_preferences_foundation/shared_preferences_foundation-umbrella.h>

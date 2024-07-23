@@ -1,0 +1,18 @@
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/FieldValue+Encodable.swift":
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/FieldValue+Encodable.swiftconstvalues"
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/FieldValue+Encodable.d"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/FieldValue+Encodable.o"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/FieldValue+Encodable.swiftdeps"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/FieldValue+Encodable.dia"
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/EncoderDecoder.swift":
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/EncoderDecoder.swiftconstvalues"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/EncoderDecoder.o"
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/EncoderDecoder.d"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/EncoderDecoder.swiftdeps"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/EncoderDecoder.dia"
+"/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/FirebaseFirestore/Firestore/Swift/Source/Codable/ExplicitNull.swift":
+  dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/ExplicitNull.d"
+  const-values: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/ExplicitNull.swiftconstvalues"
+  diagnostics: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/ExplicitNull.dia"
+  swift-dependencies: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/ExplicitNull.swiftdeps"
+  object: "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/FirebaseFirestore.build/Objects-normal/arm64/ExplicitNull.o"

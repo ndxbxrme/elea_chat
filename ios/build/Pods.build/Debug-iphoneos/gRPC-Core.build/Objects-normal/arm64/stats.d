@@ -1,0 +1,42 @@
+dependencies: \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/debug/stats.cc \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/Target\ Support\ Files/gRPC-Core/gRPC-Core-prefix.pch \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/include/grpc/support/port_platform.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/debug/stats.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/string_view.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/attributes.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/config.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/options.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/policy_checks.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/nullability.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/nullability_impl.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/meta/type_traits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/throw_delegate.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/macros.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/optimization.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/port.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/types/span.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/types/internal/span.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/algorithm/algorithm.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/debug/histogram_view.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/debug/stats_data.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/gprpp/per_cpu.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/include/grpc/support/cpu.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/gprpp/no_destruct.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/gprpp/construct_destruct.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/str_cat.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/has_absl_stringify.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/internal/resize_uninitialized.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/internal/stringify_sink.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/numbers.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/endian.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/casts.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/identity.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/unaligned_access.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/bits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/internal/bits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/int128.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/int128_have_intrinsic.inc \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/str_join.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/internal/str_join_internal.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/strings/internal/ostringstream.h

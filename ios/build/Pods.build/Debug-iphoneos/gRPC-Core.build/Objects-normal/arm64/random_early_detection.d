@@ -1,0 +1,41 @@
+dependencies: \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/backoff/random_early_detection.cc \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/Target\ Support\ Files/gRPC-Core/gRPC-Core-prefix.pch \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/include/grpc/support/port_platform.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/Pods/gRPC-Core/src/core/lib/backoff/random_early_detection.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/bit_gen_ref.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/fast_type_id.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/config.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/options.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/policy_checks.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/macros.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/attributes.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/optimization.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/port.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/meta/type_traits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/distribution_caller.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/utility/utility.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/inline_variable.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/identity.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/base/internal/invoke.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/fast_uniform_bits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/traits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/bits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/internal/bits.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/int128.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/numeric/int128_have_intrinsic.inc \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/distributions.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/bernoulli_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/iostream_state_saver.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/beta_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/fastmath.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/generate_real.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/exponential_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/gaussian_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/uniform_helper.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/log_uniform_int_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/uniform_int_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/internal/wide_multiply.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/poisson_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/uniform_real_distribution.h \
+  /Users/martinmckee/Sites/Apps/elea-test/elea_chat/build/ios/Debug-iphoneos/abseil/absl.framework/Headers/random/zipf_distribution.h

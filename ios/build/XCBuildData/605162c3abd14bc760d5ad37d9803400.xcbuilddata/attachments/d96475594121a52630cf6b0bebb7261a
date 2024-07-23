@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Debug-iphoneos/emoji_picker_flutter/emoji_picker_flutter.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/emoji_picker_flutter.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Debug-iphoneos/emoji_picker_flutter/emoji_picker_flutter.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "emoji_picker_flutter-Swift.h",
+      'external-contents': "/Users/martinmckee/Sites/Apps/elea-test/elea_chat/ios/build/Pods.build/Debug-iphoneos/emoji_picker_flutter.build/unextended-interface-header.h",
+    }]
+    }]
+}
