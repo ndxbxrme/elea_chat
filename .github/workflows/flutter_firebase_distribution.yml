@@ -122,24 +122,24 @@ jobs:
         </plist>
         EOF
 
-      - name: Build iOS app
-        run: flutter build ios --release --no-codesign
+    - name: Build iOS app
+      run: flutter build ios --release --no-codesign
 
-      - name: Archive iOS app
-        run: |
-          xcodebuild -workspace ios/Runner.xcworkspace \
-          -scheme Runner \
-          -sdk iphoneos \
-          -configuration Release \
-          -archivePath $PWD/build/Runner.xcarchive \
-          GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
-          archive | xcpretty --no-utf
+    - name: Archive iOS app
+      run: |
+        xcodebuild -workspace ios/Runner.xcworkspace \
+        -scheme Runner \
+        -sdk iphoneos \
+        -configuration Release \
+        -archivePath $PWD/build/Runner.xcarchive \
+        GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
+        archive | xcpretty --no-utf
 
-      - name: Export iOS app
-        run: |
-          xcodebuild -exportArchive \
-          -archivePath $PWD/build/Runner.xcarchive \
-          -exportOptionsPlist ios/Runner/ExportOptions.plist \
-          -exportPath $PWD/build \
-          GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
-          | xcpretty --no-utf
+    - name: Export iOS app
+      run: |
+        xcodebuild -exportArchive \
+        -archivePath $PWD/build/Runner.xcarchive \
+        -exportOptionsPlist ios/Runner/ExportOptions.plist \
+        -exportPath $PWD/build \
+        GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
+        | xcpretty --no-utf
