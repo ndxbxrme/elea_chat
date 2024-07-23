@@ -98,11 +98,11 @@ jobs:
         -sdk iphoneos \
         -configuration Release \
         -archivePath $PWD/build/Runner.xcarchive \
-        archive
+        archive | xcpretty
 
     - name: Export iOS app
       run: |
         xcodebuild -exportArchive \
         -archivePath $PWD/build/Runner.xcarchive \
         -exportOptionsPlist ios/Runner/ExportOptions.plist \
-        -exportPath $PWD/build
+        -exportPath $PWD/build | xcpretty
