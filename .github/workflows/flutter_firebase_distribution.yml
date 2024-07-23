@@ -88,6 +88,31 @@ jobs:
         cd ios
         pod install
 
+    - name: Create Exportoptions.plist
+      run:  |
+        cat <<EOF > ios/Runner/ExportOptions.plist
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+        <dict>
+            <key>compileBitcode</key>
+            <false/>
+            <key>destination</key>
+            <string>export</string>
+            <key>method</key>
+            <string>ad-hoc</string>
+            <key>signingStyle</key>
+            <string>manual</string>
+            <key>stripSwiftSymbols</key>
+            <true/>
+            <key>teamID</key>
+            <string>${{ secrets.DEVELOPMENT_TEAM_ID }}</string>
+            <key>thinning</key>
+            <string>&lt;none&gt;</string>
+        </dict>
+        </plist>
+        EOF
+        
     - name: Build iOS app
       run: flutter build ios --release --no-codesign
 
@@ -104,4 +129,5 @@ jobs:
       run: |
         xcodebuild -exportArchive \
         -archivePath $PWD/build/Runner.xcarchive \
+        -exportOptionsPlist ios/Runner/ExportOptions.plist \
         -exportPath $PWD/build | xcpretty
