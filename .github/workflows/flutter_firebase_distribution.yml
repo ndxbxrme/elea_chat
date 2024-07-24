@@ -173,27 +173,23 @@ jobs:
     - name: Archive iOS app
       if: matrix.os == 'macos-latest'
       run: |
-        set -x
         xcodebuild -workspace ios/Runner.xcworkspace \
         -scheme Runner \
         -sdk iphoneos \
         -configuration Release \
         -archivePath $PWD/build/Runner.xcarchive \
         GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
-        archive | tee build.log | xcpretty --no-utf
-        set +x
+        archive | xcpretty --no-utf
 
     - name: Export iOS app
       if: matrix.os == 'macos-latest'
       run: |
-        set -x
         xcodebuild -exportArchive \
         -archivePath $PWD/build/Runner.xcarchive \
         -exportOptionsPlist ios/Runner/ExportOptions.plist \
         -exportPath $PWD/build \
         GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
-        | tee export.log | xcpretty --no-utf
-        set +x
+        | xcpretty --no-utf
 
 
     - name: Set up Node.js
