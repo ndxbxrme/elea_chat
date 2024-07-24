@@ -69,9 +69,6 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Check generated
-      run: cat ios/Flutter/Generated.xcconfig
-
     - name: Decrypt and install provisioning profile
       run: |
         echo "${{ secrets.IOS_PROVISIONING_PROFILE }}" | base64 --decode > provisioning_profile.mobileprovision
@@ -85,7 +82,9 @@ jobs:
         security import ios_certificate.p12 -t agg -k ~/Library/Keychains/build.keychain -P "${{ secrets.IOS_CERTIFICATE_PASSWORD }}" -A
         security list-keychain -d user -s ~/Library/Keychains/build.keychain
         security unlock-keychain -p "" ~/Library/Keychains/build.keychain
+        security set-keychain-settings -u ~/Library/Keychains/build.keychain
         security set-key-partition-list -S apple-tool:,apple: -s -k "" ~/Library/Keychains/build.keychain
+
 
     - name: Install CocoaPods dependencies
       run: |
