@@ -112,7 +112,7 @@ jobs:
             <key>signingStyle</key>
             <string>manual</string>
             <key>signingCertificate</key>
-            <string>Apple Development: Martin McKee (82LC34A35S)</string>
+            <string>Martin McKee</string>
             <key>stripSwiftSymbols</key>
             <true/>
             <key>teamID</key>
