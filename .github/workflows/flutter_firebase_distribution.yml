@@ -107,12 +107,12 @@ jobs:
             <key>provisioningProfiles</key>
             <dict>
                 <key>com.eleaapp.elea</key>
-                <string>Elea App Provisioning Profile - Dev</string>
+                <string>Elea App Profile</string>
             </dict>
             <key>signingStyle</key>
             <string>manual</string>
             <key>signingCertificate</key>
-            <string>iPhone Developer: Martin McKee (82LC34A35S)</string>
+            <string>iPhone Distribution: Martin McKee (E39D5QKER3)</string>
             <key>stripSwiftSymbols</key>
             <true/>
             <key>teamID</key>
