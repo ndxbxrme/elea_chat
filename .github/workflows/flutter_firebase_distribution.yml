@@ -116,7 +116,7 @@ jobs:
             <key>stripSwiftSymbols</key>
             <true/>
             <key>teamID</key>
-            <string>${{ secrets.DEVELOPMENT_TEAM_ID }}</string>
+            <string>E39D5QKER3</string>
             <key>thinning</key>
             <string>&lt;none&gt;</string>
         </dict>
