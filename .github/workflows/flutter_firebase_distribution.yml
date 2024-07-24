@@ -111,6 +111,8 @@ jobs:
             </dict>
             <key>signingStyle</key>
             <string>manual</string>
+            <key>signingCertificate</key>
+            <string>Apple Distribution: Martin McKee (82LC34A35S)</string>
             <key>stripSwiftSymbols</key>
             <true/>
             <key>teamID</key>
