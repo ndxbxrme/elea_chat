@@ -190,7 +190,7 @@ jobs:
         -exportPath $PWD/build \
         GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
         | xcpretty --no-utf
-        
+
         echo "Export directory contents after export:"
         ls -la $PWD/build
 
@@ -220,7 +220,7 @@ jobs:
         IOS_FIREBASE_APP_ID: ${{ secrets.IOS_FIREBASE_APP_ID }}
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       run: |
-        firebase appdistribution:distribute build/Runner/Runner.ipa \
+        firebase appdistribution:distribute build/elea_chat.ipa \
           --app $IOS_FIREBASE_APP_ID \
           --token $FIREBASE_TOKEN \
           --groups testers
