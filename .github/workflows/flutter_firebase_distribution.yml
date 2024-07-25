@@ -190,6 +190,12 @@ jobs:
         -exportPath $PWD/build \
         GCC_WARN_INHIBIT_ALL_WARNINGS=YES \
         | xcpretty --no-utf
+        
+        echo "Export directory contents after export:"
+        ls -la $PWD/build
+
+        echo "Exported IPA contents:"
+        ls -la $PWD/build/Runner
 
 
     - name: Set up Node.js
