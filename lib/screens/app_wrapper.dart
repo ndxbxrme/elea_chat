@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/notification_class.dart';
 import '../components/notification_controller.dart';
+import '../components/messaging.dart';
 import 'login_screen.dart';
 import 'main_app_screen.dart';
 import 'onboarding_screen.dart';
@@ -102,6 +103,7 @@ class _AppWrapperState extends State<AppWrapper> with TickerProviderStateMixin {
                               return const OnboardingScreen();
                             }
                             userProfile?["id"] = userId;
+                            Messaging.setupFirebaseMessaging(userId);
                             final Random random = Random();
                             userProfile?["rnd"] = random.nextInt(999999);
                             return MainAppScreen(

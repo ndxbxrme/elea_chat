@@ -13,10 +13,12 @@ import 'profile_screen.dart';
 class ForYouScreen extends StatefulWidget {
   late String selectedTopic;
   final Map<String, dynamic> userProfile;
+  final String? action;
 
   ForYouScreen({
     this.selectedTopic = 'All topics',
     required this.userProfile,
+    this.action,
   });
 
   @override
@@ -39,6 +41,18 @@ class _ForYouScreenState extends State<ForYouScreen> {
     super.initState();
     topicsFuture = _fetchTopics();
     _loadPosts();
+    if (widget.action != null && widget.action!.startsWith('forum')) {
+      String postId = widget.action!.replaceFirst('forum_', '');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ForumPostScreen(
+            postId: postId,
+            userProfile: widget.userProfile,
+          ),
+        ),
+      );
+    }
   }
 
   void _initializeTopicKeys() {

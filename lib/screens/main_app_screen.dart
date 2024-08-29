@@ -198,6 +198,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
             if (index == 0) {
               return ForYouScreen(
                 userProfile: userProfile,
+                action: widget.action,
               );
             } else if (index == 1) {
               return ConnectionsScreen(
