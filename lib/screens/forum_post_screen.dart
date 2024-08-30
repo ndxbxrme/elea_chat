@@ -170,7 +170,7 @@ class ForumPostScreen extends StatelessWidget {
                   return const Text("Loading...");
                 }
                 if (snapshot.data!.docs.isEmpty) {
-                  return const Text("No posts here");
+                  return const Text("No replies yet");
                 }
                 List<QueryDocumentSnapshot> sortedDocs = snapshot.data!.docs;
                 sortedDocs.sort((a, b) => (a['timestamp'] as Timestamp)
