@@ -142,7 +142,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 'dob': _data.dob,
                                 'gender': _data.gender,
                                 'county': _data.county,
-                                'topics': _data.topics?.toList()
+                                'topics': _data.topics?.toList(),
+                                'timestamp': Timestamp.now(),
                               },
                               SetOptions(merge: true),
                             );

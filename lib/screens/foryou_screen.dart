@@ -151,6 +151,12 @@ class _ForYouScreenState extends State<ForYouScreen> {
     for (var doc in snapshot.docs) {
       topics.add(doc['topic']);
     }
+    topics.sort((a, b) => a.compareTo(b));
+    widget.userProfile["topics"]
+        .sort((a, b) => b.toString().compareTo(a.toString()));
+    for (var userTopic in widget.userProfile["topics"]) {
+      topics.insert(0, userTopic);
+    }
     topics.insert(0, 'All topics');
     return topics;
   }

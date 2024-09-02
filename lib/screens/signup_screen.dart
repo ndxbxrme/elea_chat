@@ -20,9 +20,6 @@ class _SignupScreenState extends State<SignupScreen> {
   String? _loginError;
   String? repeatPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return null;
-    }
-    if (_password != _password1) {
       return 'Passwords must match';
     }
     return null;
@@ -39,6 +36,7 @@ class _SignupScreenState extends State<SignupScreen> {
         Navigator.pop(context);
       } on Exception catch (e) {
         // TODO
+        print(e);
         setState(() {
           _loginError = "Unrecognized email or password.";
         });

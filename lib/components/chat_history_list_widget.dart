@@ -142,27 +142,23 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
                 controller: _scrollController,
                 reverse: true,
                 separatorBuilder: (context, index) {
-                  //return SizedBox.shrink();
-                  if (index == 0) {
-                    return const SizedBox.shrink();
+                  if (index == 0 || index >= _messages.length) {
+                    return const SizedBox.shrink(); // Skip rendering anything
                   }
-                  if (index >= _messages.length) {
-                    return const SizedBox.shrink();
-                  }
-                  final message = _messages[index - 1];
+
+                  final currentMessage = _messages[index - 1];
                   final previousMessage = _messages[index];
-                  final difference = message
-                      .get('timestamp')
-                      .toDate()
-                      .difference(previousMessage.get('timestamp').toDate());
+                  final currentDate = currentMessage.get('timestamp').toDate();
+                  final previousDate =
+                      previousMessage.get('timestamp').toDate();
 
-                  if (difference.inHours >= 1) {
-                    return ChatDateWidget(
-                      date: message.get('timestamp').toDate(),
-                    );
+                  if (currentDate.day != previousDate.day ||
+                      currentDate.month != previousDate.month ||
+                      currentDate.year != previousDate.year) {
+                    return ChatDateWidget(date: currentDate);
                   }
 
-                  return const SizedBox.shrink();
+                  return SizedBox.shrink(); // Skip rendering anything
                 },
                 itemCount: _messages.length + (_isLoadingMore ? 1 : 0) + 1,
                 itemBuilder: (context, index) {

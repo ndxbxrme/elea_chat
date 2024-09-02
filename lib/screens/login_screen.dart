@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../components/elea_text_box.dart';
 import '../constants.dart';
 import '../validators.dart';
+import '../functions.dart';
 import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String _password = "";
   String? _loginError;
   _validateAndSave() async {
-    if (_formKey.currentState!.validate()) {
+    if (true /*_formKey.currentState!.validate()*/) {
       _formKey.currentState!.save();
       try {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -27,9 +28,11 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       } on Exception catch (e) {
         // TODO
+        print(e);
         setState(() {
           _loginError = "Unrecognized email or password.";
         });
+        Functions.showToast('Login error!');
       }
       return true;
     }
@@ -62,6 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onValidate: Validators.validateEmail,
                   defaultErrorMessage: "Please enter your email address.",
                   initialValue: _email,
+                  suppressCheckmark: true,
                 ),
               ),
               const SizedBox(height: 20),
@@ -73,6 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onSaved: (value) => _password = value!,
                   onValidate: Validators.validatePassword,
                   initialValue: _password,
+                  suppressCheckmark: true,
                 ),
               ),
               const SizedBox(height: 20),

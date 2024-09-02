@@ -7,6 +7,7 @@ class EleaTextBox extends StatefulWidget {
   final String? initialValue;
   final String? defaultErrorMessage;
   final bool? obscureText;
+  final bool suppressCheckmark;
   final TextInputType? textInputType;
   final FormFieldSetter<String>? onSaved;
   final FormFieldSetter<String>? onChanged;
@@ -22,6 +23,7 @@ class EleaTextBox extends StatefulWidget {
     this.obscureText = false,
     this.defaultErrorMessage,
     this.textInputType = TextInputType.text,
+    this.suppressCheckmark = false,
   });
 
   @override
@@ -114,14 +116,18 @@ class _EleaTextBoxState extends State<EleaTextBox> {
                 ),
               ),
               Visibility(
-                visible: validated && errorMessage == null,
+                visible: validated &&
+                    errorMessage == null &&
+                    !widget.suppressCheckmark,
                 child: const Icon(
                   Icons.check_circle,
                   color: Colors.green,
                 ),
               ),
               Visibility(
-                visible: validated && errorMessage != null,
+                visible: validated &&
+                    errorMessage != null &&
+                    !widget.suppressCheckmark,
                 child: const Icon(
                   Icons.error,
                   color: Colors.red,
@@ -130,7 +136,7 @@ class _EleaTextBoxState extends State<EleaTextBox> {
             ],
           ),
         ),
-        if (validated && errorMessage != null)
+        if (validated && errorMessage != null && !widget.suppressCheckmark)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6.0),
             child: Text(

@@ -218,6 +218,7 @@ void _showPopup(BuildContext context, Map<String, dynamic> user) {
                         'screen': 'connections_$fromId',
                         'timestamp': FieldValue.serverTimestamp(),
                       };
+                      Functions.showToast("Connection request sent.");
                       notificationRef.add(notificationObject);
                     } catch (e) {
                       print('Failed to add request: $e');
@@ -546,6 +547,8 @@ class _ConnectionRequestsPageState extends State<ConnectionRequestsPage> {
                                           widget.userProfile['dismissed'] =
                                               dismissed;
                                         });
+                                        Functions.showToast(
+                                            "Connection request dismissed.");
                                       }
                                     },
                                     child: Text("Dismiss")),

@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../components/notification_class.dart';
 import '../components/notification_controller.dart';
 import '../components/messaging.dart';
+import 'auth_wrapper.dart';
+import 'error_screen.dart';
+import 'loading_screen.dart';
 import 'login_screen.dart';
 import 'main_app_screen.dart';
 import 'onboarding_screen.dart';
@@ -58,65 +61,15 @@ class _AppWrapperState extends State<AppWrapper> with TickerProviderStateMixin {
             future: SharedPreferences.getInstance(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                // Return a loading indicator while fetching SharedPreferences
-                return const SizedBox.shrink();
+                return LoadingScreen();
               } else if (snapshot.hasError) {
-                // Handle errors gracefully
-                return const Text('Error fetching SharedPreferences');
+                return ErrorScreen(message: 'Error fetching SharedPreferences');
               } else {
                 final prefs = snapshot.data;
                 if (prefs == null) {
-                  // If SharedPreferences is null, navigate to OnboardingScreen
                   return const OnboardingScreen();
                 }
-                return StreamBuilder<User?>(
-                  stream: FirebaseAuth.instance.authStateChanges(),
-                  builder: (context, authSnapshot) {
-                    if (authSnapshot.connectionState ==
-                        ConnectionState.waiting) {
-                      return const SizedBox.shrink();
-                    } else if (authSnapshot.hasData) {
-                      final userId = authSnapshot.data!.uid;
-                      NotificationController notificationController =
-                          Provider.of<NotificationController>(context,
-                              listen: false);
-                      notificationController.setId(userId);
-                      //return MainAppScreen(action: widget.action);
-                      return FutureBuilder<
-                          DocumentSnapshot<Map<String, dynamic>>>(
-                        future: FirebaseFirestore.instance
-                            .collection("users")
-                            .doc(FirebaseAuth.instance.currentUser?.uid)
-                            .get(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return SizedBox.shrink();
-                          } else if (snapshot.hasError) {
-                            return Center(
-                                child: Text('Error: ${snapshot.error}'));
-                          } else if (!snapshot.hasData) {
-                            return const OnboardingScreen();
-                          } else {
-                            final userProfile = snapshot.data?.data();
-                            if (userProfile == null) {
-                              return const OnboardingScreen();
-                            }
-                            userProfile?["id"] = userId;
-                            Messaging.setupFirebaseMessaging(userId);
-                            final Random random = Random();
-                            userProfile?["rnd"] = random.nextInt(999999);
-                            return MainAppScreen(
-                                action: widget.action,
-                                userProfile: userProfile!);
-                          }
-                        },
-                      );
-                    } else {
-                      return const LoginScreen();
-                    }
-                  },
-                );
+                return AuthWrapper(action: widget.action);
               }
             },
           ),
