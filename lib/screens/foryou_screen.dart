@@ -172,6 +172,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
         title: 'For You',
         username: widget.userProfile["username"],
         userProfile: widget.userProfile,
+        canMakeNewPost: true,
       ),
       body: Column(
         children: [

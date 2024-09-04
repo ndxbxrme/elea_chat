@@ -373,16 +373,9 @@ class _SuggestedConnectionsPageState extends State<SuggestedConnectionsPage> {
       future: getMatchedUsers(widget.userProfile),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return SuggestedConnection(
-            user: {
-              "id": "null",
-              "fullname": "■■■■■ ■■■■",
-              "dob": "■■",
-              "gender": "■■■■",
-              "county": "■■■ ■■■■",
-              "bio": "■■ ■■■■■ ■■ ■■■■ ■ ■■■ ■■■ ■ ■ ■■■■ ■ ■■",
-            },
-          );
+          return Center(
+              child:
+                  Text("Connecting you to the best matches... Please wait."));
         } else if (snapshot.hasError) {
           return Center(child: Text("Error: ${snapshot.error}"));
         } else {
@@ -484,7 +477,9 @@ class _ConnectionRequestsPageState extends State<ConnectionRequestsPage> {
                       .get(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return (index == connectionRequests.length)
+                          ? Center(child: CircularProgressIndicator())
+                          : SizedBox.shrink();
                     } else if (snapshot.hasError) {
                       return Center(child: Text("Error: ${snapshot.error}"));
                     } else {

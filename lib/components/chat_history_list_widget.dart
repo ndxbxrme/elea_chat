@@ -7,7 +7,9 @@ import 'chat_date_widget.dart';
 
 class ChatHistoryListWidget extends StatefulWidget {
   final String chatId;
-  const ChatHistoryListWidget({super.key, required this.chatId});
+  final String friendId;
+  const ChatHistoryListWidget(
+      {super.key, required this.chatId, required this.friendId});
 
   @override
   State<ChatHistoryListWidget> createState() => _ChatHistoryListWidgetState();
@@ -23,10 +25,29 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
   DocumentSnapshot? _lastDocument;
   final int _pageSize = 5;
   double _scrollThreshold = 0.0;
+  Timestamp? _lastReadTimestamp;
 
   @override
   void initState() {
     super.initState();
+    FirebaseFirestore.instance
+        .collection('notifications')
+        .doc('${widget.friendId}_${widget.chatId}')
+        .snapshots()
+        .listen((snapshot) {
+      if (snapshot.exists) {
+        final lastReadTimestamp = snapshot.data()?['timestamp'];
+        setState(() {
+          print('got notification');
+          _lastReadTimestamp = lastReadTimestamp;
+        });
+      } else {
+        setState(() {
+          _lastReadTimestamp = Timestamp.now();
+        });
+      }
+    });
+
     /*WidgetsBinding.instance.addPostFrameCallback((_) {
       _updateScrollThreshold();
     });
@@ -191,6 +212,7 @@ class _ChatHistoryListWidgetState extends State<ChatHistoryListWidget> {
                     messageId: message.id,
                     image: message['image'],
                     currentUserId: FirebaseAuth.instance.currentUser!.uid,
+                    lastReadTimestamp: _lastReadTimestamp,
                     onReply: (messageId) {
                       print(messageId);
                     },

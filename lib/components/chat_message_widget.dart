@@ -12,6 +12,7 @@ class ChatMessageWidget extends StatelessWidget {
   final String messageUserId;
   final String currentUserId;
   final String messageId;
+  final Timestamp? lastReadTimestamp;
   final Function(String) onReply;
   final Function(String) onDelete;
   final Function(String) onEdit;
@@ -23,6 +24,7 @@ class ChatMessageWidget extends StatelessWidget {
       required this.messageUserId,
       required this.currentUserId,
       required this.messageId,
+      required this.lastReadTimestamp,
       required this.onReply,
       required this.onDelete,
       required this.onEdit,
@@ -132,12 +134,25 @@ class ChatMessageWidget extends StatelessWidget {
                           ),
                         const SizedBox(height: 4.0),
                         isCurrentUser
-                            ? Text(
-                                timeString,
-                                style: TextStyle(
-                                  fontSize: 12.0,
-                                  color: Colors.grey[800],
-                                ),
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    timeString,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  (lastReadTimestamp != null &&
+                                          messageTimestamp.compareTo(
+                                                  lastReadTimestamp!) <=
+                                              0)
+                                      ? Icon(Icons.done_all, color: Colors.blue)
+                                      : SizedBox.shrink(),
+                                ],
                               )
                             : Row(
                                 mainAxisAlignment:

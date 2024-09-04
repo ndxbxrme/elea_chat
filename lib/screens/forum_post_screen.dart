@@ -34,6 +34,7 @@ class ForumPostScreen extends StatelessWidget {
         title: 'For You',
         username: userProfile["username"],
         userProfile: userProfile,
+        canMakeNewPost: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -191,7 +192,10 @@ class ForumPostScreen extends StatelessWidget {
                               userId: document["owner"],
                             ),
                             trailing: IconButton(
-                                onPressed: () {}, icon: Icon(Icons.more_horiz)),
+                                onPressed: () {
+                                  Functions.showToast("Nothing to see here");
+                                },
+                                icon: Icon(Icons.more_horiz)),
                             title: Text(document["username"],
                                 overflow: TextOverflow.ellipsis,
                                 maxLines: 2,
@@ -203,25 +207,12 @@ class ForumPostScreen extends StatelessWidget {
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ForumPostScreen(
-                                    postId: document.id,
-                                    userProfile: userProfile,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: ExpandableText(
-                                document["post"],
-                                maxLines: 20,
-                              ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: ExpandableText(
+                              document["post"],
+                              maxLines: 20,
                             ),
                           ),
                           SizedBox(height: 6.0),

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:elea_chat/components/chat_history_list_widget.dart';
+import 'package:elea_chat/components/typing_indicator_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -91,6 +92,7 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                   Expanded(
                     child: ChatHistoryListWidget(
                       chatId: widget.chatId,
+                      friendId: friendId,
                     ),
                   ),
                   Padding(
@@ -107,40 +109,51 @@ class _ChatMessagesScreenState extends State<ChatMessagesScreen> {
                                 width: 1.0,
                               ),
                             ),
-                            child: ChatInput(onSubmitted: (value) async {
-                              final text = value.trim();
-                              if (text.isNotEmpty) {
-                                await FirebaseFirestore.instance
-                                    .collection('chats')
-                                    .doc(widget.chatId)
-                                    .collection('messages')
-                                    .add({
-                                  'text': text,
-                                  'image': null,
-                                  'userId': currentId,
-                                  'timestamp': Timestamp.now(),
-                                });
-                                final chatRef = FirebaseFirestore.instance
-                                    .collection('chats')
-                                    .doc(widget.chatId);
-                                await chatRef.update({
-                                  'last': {
-                                    'image': null,
+                            child: ChatInput(
+                              onSubmitted: (value) async {
+                                final text = value.trim();
+                                if (text.isNotEmpty) {
+                                  await FirebaseFirestore.instance
+                                      .collection('chats')
+                                      .doc(widget.chatId)
+                                      .collection('messages')
+                                      .add({
                                     'text': text,
+                                    'image': null,
                                     'userId': currentId,
                                     'timestamp': Timestamp.now(),
+                                  });
+                                  final chatRef = FirebaseFirestore.instance
+                                      .collection('chats')
+                                      .doc(widget.chatId);
+                                  await chatRef.update({
+                                    'last': {
+                                      'image': null,
+                                      'text': text,
+                                      'userId': currentId,
+                                      'timestamp': Timestamp.now(),
+                                    }
+                                  });
+                                  final docRef = FirebaseFirestore.instance
+                                      .collection('notifications')
+                                      .doc('${friendId}_${widget.chatId}');
+
+                                  // Check if the document already exists
+                                  final docSnapshot = await docRef.get();
+
+                                  if (!docSnapshot.exists) {
+                                    // Only set the document if it doesn't already exist
+                                    await docRef.set({
+                                      'userId': friendId,
+                                      'screen': 'chats_${widget.chatId}',
+                                      'timestamp': Timestamp.now(),
+                                    });
                                   }
-                                });
-                                await FirebaseFirestore.instance
-                                    .collection('notifications')
-                                    .doc('${friendId}_${widget.chatId}')
-                                    .set({
-                                  'userId': friendId,
-                                  'screen': 'chats_${widget.chatId}',
-                                  'timestamp': Timestamp.now(),
-                                });
-                              }
-                            }),
+                                }
+                              },
+                              userId: currentId,
+                              chatId: widget.chatId,
+                            ),
                             /*child: TextField(
                               controller: _textController,
                               decoration: const InputDecoration(
