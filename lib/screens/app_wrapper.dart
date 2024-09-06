@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/notification_class.dart';
 import '../components/notification_controller.dart';
-import '../components/messaging.dart';
+//import '../components/messaging.dart';
 import 'auth_wrapper.dart';
 import 'error_screen.dart';
 import 'loading_screen.dart';
