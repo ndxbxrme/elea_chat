@@ -451,6 +451,15 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                   SizedBox(width: 6.0),
                                   GestureDetector(
                                     child: Icon(Icons.reply_outlined),
+                                    onTap: () async {
+                                      final userRef = FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(document["owner"]);
+                                      Map<String, dynamic>? user =
+                                          (await userRef.get()).data();
+                                      Functions.showConnectionRequestPopup(
+                                          context, user!);
+                                    },
                                   ),
                                 ]),
                               ],
