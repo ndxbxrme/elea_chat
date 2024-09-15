@@ -39,7 +39,11 @@ class EleaAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         if (canMakeNewPost)
           IconButton(
-            icon: Icon(Icons.post_add),
+            icon: Image.asset(
+              'assets/images/pencil.png',
+              width: 24, // Adjust size as needed
+              height: 24,
+            ),
             onPressed: () {
               showDialog(
                 context: context,

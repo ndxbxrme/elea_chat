@@ -119,15 +119,14 @@ class _MainAppScreenState extends State<MainAppScreen> {
               right: 0,
               child: IgnorePointer(
                 child: Container(
-                  height: 40,
+                  height: 60,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: Alignment(0.00, -1.00),
+                      end: Alignment(0, 1),
                       colors: [
-                        Color(0xFFD8D3D3)!
-                            .withOpacity(0.0), // Transparent color
-                        Color(0xFFD8D3D3)!, // Solid gray color
+                        Colors.white.withOpacity(0.3400000035762787),
+                        Color(0xFFF4EEEA)
                       ],
                     ),
                   ),
@@ -143,7 +142,7 @@ class _MainAppScreenState extends State<MainAppScreen> {
 
   Widget _buildBottomNavigationBar() {
     return BottomNavigationBar(
-      backgroundColor: Color(0xFFD8D3D3),
+      backgroundColor: Color(0xFFF4EEEA),
       currentIndex: _currentIndex,
       onTap: _onTap,
       items: [

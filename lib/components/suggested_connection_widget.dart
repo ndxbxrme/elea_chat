@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import '../constants.dart';
 import '../functions.dart';
 import 'avatar_widget.dart';
 import 'expandable_text.dart';
@@ -47,13 +47,12 @@ class SuggestedConnection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton(onPressed: dismissedPressed, child: Text("Dismiss")),
               TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    textStyle: TextStyle(fontSize: 16),
-                  ),
+                  style: Constants.outlineButtonStyle,
+                  onPressed: dismissedPressed,
+                  child: Text("Dismiss")),
+              TextButton(
+                  style: Constants.orangeButtonStyle,
                   onPressed: connectPressed,
                   child: Text("Request to connect")),
             ],

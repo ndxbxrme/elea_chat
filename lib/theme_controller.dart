@@ -30,12 +30,21 @@ class ThemeController {
             TextStyle(fontSize: 14, height: 1.5, color: Constants.textColor),
         bodySmall:
             TextStyle(fontSize: 12, height: 1.5, color: Constants.textColor),
-        labelLarge:
-            TextStyle(fontSize: 14, height: 1.5, color: Constants.textColor),
-        labelMedium:
-            TextStyle(fontSize: 12, height: 1.5, color: Constants.textColor),
-        labelSmall:
-            TextStyle(fontSize: 10, height: 1.5, color: Constants.textColor),
+        labelLarge: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            height: 1.5,
+            color: Constants.textColor),
+        labelMedium: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            height: 1.5,
+            color: Constants.textColor),
+        labelSmall: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            height: 1.5,
+            color: Constants.textColor),
       ),
     );
   }

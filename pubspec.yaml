@@ -15,6 +15,7 @@ dependencies:
   firebase_core: ^2.31.0
   firebase_messaging: ^14.9.4
   firebase_storage: ^11.7.7
+  flutter_svg: ^1.0.3
   flutter:
     sdk: flutter
   flutter_local_notifications: ^17.2.2
@@ -40,6 +41,15 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/blue-blob.svg
+    - assets/images/orange-blob.svg
+    - assets/images/chat-icon.svg
+    - assets/images/connect.svg
+    - assets/images/settings-dots.svg
+    - assets/images/share.svg
+    - assets/images/speech-bubble.svg
+    - assets/images/pencil.png
+    - assets/images/send.png
     - assets/sounds/notification_sound.wav
     - assets/sounds/notification_sound2.wav
 

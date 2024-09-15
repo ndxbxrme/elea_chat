@@ -164,7 +164,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         }
                       },
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Constants.orangeColor,
                         foregroundColor: Colors.white,
                         textStyle: TextStyle(fontSize: 20),
                       ),

@@ -88,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   _validateAndSave();
                 },
                 child: const Text('Log In'),
+                style: Constants.orangeButtonStyle,
               ),
               const SizedBox(height: 20),
               InkWell(

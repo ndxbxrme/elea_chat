@@ -70,7 +70,7 @@ class _ForYouScreenState extends State<ForYouScreen> {
         final context = key!.currentContext;
         if (context != null) {
           await Scrollable.ensureVisible(context,
-              duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+              duration: Duration(milliseconds: 500), curve: Curves.linear);
         }
       }
     }
@@ -212,11 +212,21 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                 const EdgeInsets.symmetric(horizontal: 3.0),
                             child: Container(
                               key: _topicKeys[index],
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      16.0, 6.0, 16.0, 6.0),
                                   backgroundColor: topic == widget.selectedTopic
-                                      ? Constants.toggleSelectedBgColor
+                                      ? Constants.toggleAllBgColor
                                       : Constants.toggleDefaultBgColor,
+                                  foregroundColor: topic == widget.selectedTopic
+                                      ? Colors.white
+                                      : Constants.toggleAllBgColor,
+                                  side: BorderSide(
+                                    color: Constants
+                                        .borderColor, // 1px grey border
+                                    width: 1.0,
+                                  ),
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -411,12 +421,13 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(25.0),
                                                 border: Border.all(
-                                                    color: Colors.grey),
+                                                    color:
+                                                        Constants.borderColor),
                                               ),
                                               child: Padding(
                                                 padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 6.0),
+                                                    const EdgeInsets.fromLTRB(
+                                                        16.0, 6.0, 16.0, 6.0),
                                                 child: Text(topic),
                                               )),
                                         ))
