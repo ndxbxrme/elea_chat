@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../constants.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
@@ -51,7 +52,7 @@ class _ExpandableTextState extends State<ExpandableText> {
         ),
         if (_isOverflowing)
           Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               InkWell(
                 onTap: () {
@@ -61,7 +62,7 @@ class _ExpandableTextState extends State<ExpandableText> {
                 },
                 child: Text(
                   _isExpanded ? 'Show less' : 'Show more',
-                  style: const TextStyle(color: Colors.blue),
+                  style: const TextStyle(color: Constants.orangeColor),
                 ),
               ),
             ],

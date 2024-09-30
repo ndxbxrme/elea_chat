@@ -7,7 +7,7 @@ class AvatarWidget extends StatelessWidget {
   const AvatarWidget(
       {super.key,
       required this.userId,
-      this.radius = 20.0,
+      this.radius = 18.0,
       this.currentRandom = 0});
 
   @override

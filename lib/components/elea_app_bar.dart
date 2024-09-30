@@ -90,13 +90,16 @@ class EleaAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: StreamBuilder<List<EleaNotification>>(
               stream: notificationController.notificationsStream,
               builder: (context, snapshot) {
-                return Badge(
-                  alignment: Alignment.bottomLeft,
-                  isLabelVisible: userProfile?["avatarUrl"] == null ||
-                      userProfile?["bio"] == null,
-                  child: AvatarWidget(
-                    userId: userId,
-                    currentRandom: userProfile?["rnd"] ?? 0,
+                return Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Badge(
+                    alignment: Alignment.bottomLeft,
+                    isLabelVisible: userProfile?["avatarUrl"] == null ||
+                        userProfile?["bio"] == null,
+                    child: AvatarWidget(
+                      userId: userId,
+                      currentRandom: userProfile?["rnd"] ?? 0,
+                    ),
                   ),
                 );
               }),
