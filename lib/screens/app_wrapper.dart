@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,11 +8,8 @@ import '../components/notification_controller.dart';
 import 'auth_wrapper.dart';
 import 'error_screen.dart';
 import 'loading_screen.dart';
-import 'login_screen.dart';
-import 'main_app_screen.dart';
 import 'onboarding_screen.dart';
 import 'splash_screen.dart';
-import 'dart:math';
 
 class AppWrapper extends StatefulWidget {
   final String? action;
@@ -25,7 +20,6 @@ class AppWrapper extends StatefulWidget {
 }
 
 class _AppWrapperState extends State<AppWrapper> with TickerProviderStateMixin {
-  bool _isSplashComplete = false;
   bool _isSplashVisible = true;
 
   @override

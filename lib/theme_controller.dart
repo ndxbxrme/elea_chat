@@ -52,7 +52,7 @@ class ThemeController {
   static ThemeData lightTheme = ThemeData(
     textTheme: defaultTextTheme,
     colorScheme: const ColorScheme.light(
-      background: Colors.white,
+      surface: bgColor,
       primary: Constants.textColor,
       secondary: Colors.yellow,
     ),

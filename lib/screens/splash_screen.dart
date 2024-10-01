@@ -10,19 +10,43 @@ class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  late Animation<double> _scaleAnimation;
+  late Animation<Offset> _blueBlobAnimation;
+  late Animation<Offset> _orangeBlobAnimation;
 
   @override
   void initState() {
     super.initState();
+
     _controller = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 3),
       vsync: this,
-    );
+    )..repeat(reverse: true); // Repeat the animation for continuous effect
+
     _animation = CurvedAnimation(
       parent: _controller,
       curve: Curves.easeIn,
     );
-    _controller.forward();
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+
+    _blueBlobAnimation = Tween<Offset>(
+      begin: Offset(0, 0),
+      end: Offset(0, 0.04),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+
+    _orangeBlobAnimation = Tween<Offset>(
+      begin: Offset(0, 0),
+      end: Offset(0.04, -0.04),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
   }
 
   @override
@@ -34,30 +58,42 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Positioned image
-          Positioned(
-            top: 120,
-            right: 60,
-            child: SvgPicture.asset(
-              'assets/images/blue-blob.svg',
-              width: 130, // Set the width/height if needed
+      body: FadeTransition(
+        opacity: _animation,
+        child: Stack(
+          children: [
+            // Animated Positioned blue blob
+            Positioned(
+              top: 120,
+              right: 60,
+              child: SlideTransition(
+                position: _blueBlobAnimation,
+                child: ScaleTransition(
+                  scale: _scaleAnimation,
+                  child: SvgPicture.asset(
+                    'assets/images/blue-blob.svg',
+                    width: 130,
+                  ),
+                ),
+              ),
             ),
-          ),
-          // Positioned image
-          Positioned(
-            top: 700,
-            left: 0,
-            child: SvgPicture.asset(
-              'assets/images/orange-blob.svg',
-              width: 60, // Set the width/height if needed
+            // Animated Positioned orange blob
+            Positioned(
+              top: 700,
+              left: 0,
+              child: SlideTransition(
+                position: _orangeBlobAnimation,
+                child: ScaleTransition(
+                  scale: _scaleAnimation,
+                  child: SvgPicture.asset(
+                    'assets/images/orange-blob.svg',
+                    width: 60,
+                  ),
+                ),
+              ),
             ),
-          ),
-          // FadeTransition for the text content
-          FadeTransition(
-            opacity: _animation,
-            child: Center(
+            // FadeTransition for the text content
+            Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -71,23 +107,22 @@ class _SplashScreenState extends State<SplashScreen>
                 ],
               ),
             ),
-          ),
-          // Tagline at the bottom of the screen
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(bottom: 60), // Adjust padding as needed
-              child: Text(
-                'Tagline goes here',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey,
+            // Tagline at the bottom of the screen
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 60),
+                child: Text(
+                  'Tagline goes here',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
