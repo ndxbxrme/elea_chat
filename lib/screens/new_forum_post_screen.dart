@@ -128,7 +128,7 @@ class _NewForumPostScreenState extends State<NewForumPostScreen> {
                     SizedBox(height: 20.0),
                     TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Colors.orange,
+                        backgroundColor: Constants.orangeColor,
                         foregroundColor: Colors.white,
                         textStyle: TextStyle(fontSize: 20),
                       ),
