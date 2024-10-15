@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -29,6 +30,25 @@ class ForumPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> _showConnectionRequestPopup(
+        Map<String, dynamic>? document) async {
+      // Fetch the user data asynchronously
+      final userRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(document!["owner"]);
+      Map<String, dynamic>? user = (await userRef.get()).data();
+
+      // Check if user data is fetched successfully
+      if (user != null) {
+        user["id"] = document["owner"];
+
+        // Ensure that the widget is still mounted before using context
+
+        Functions.showConnectionRequestPopup(
+            context, user); // Use context safely here
+      }
+    }
+
     return Scaffold(
       appBar: EleaAppBar(
         title: 'For You',
@@ -56,8 +76,83 @@ class ForumPostScreen extends StatelessWidget {
                       leading: AvatarWidget(
                         userId: document["owner"],
                       ),
-                      trailing: IconButton(
-                          onPressed: () {}, icon: Icon(Icons.more_horiz)),
+                      trailing: PopupMenuButton<String>(
+                        padding: EdgeInsets.fromLTRB(0.6, 0.6, 0.0, 0.6),
+                        onSelected: (String result) async {
+                          switch (result) {
+                            case 'Block User':
+                              userProfile["blocked"] =
+                                  userProfile['blocked'] ?? [];
+                              userProfile["blocked"].add(document["owner"]);
+
+                              final userId =
+                                  FirebaseAuth.instance.currentUser!.uid;
+                              final userRef = FirebaseFirestore.instance
+                                  .collection('users')
+                                  .doc(userId);
+                              await userRef
+                                  .update({"blocked": userProfile["blocked"]});
+                              Functions.showToast("User blocked.");
+                              break;
+                            case 'Share Post':
+                              Functions.sharePost(
+                                document["title"],
+                                document["post"],
+                                "https://www.elea.com",
+                              );
+                              break;
+                            case 'Report Post':
+                              final userId =
+                                  FirebaseAuth.instance.currentUser!.uid;
+                              List<dynamic> reported =
+                                  document["reported"] ?? [];
+                              bool alreadyReported = reported
+                                  .any((report) => report['userId'] == userId);
+                              Functions.showToast("Post reported.");
+                              if (alreadyReported) {
+                                print(
+                                    'User has already reported this document.');
+                                return;
+                              }
+                              reported.add({
+                                "userId": userId,
+                                "timestamp": Timestamp.now(),
+                              });
+                              DocumentReference documentRef = FirebaseFirestore
+                                  .instance
+                                  .collection('posts')
+                                  .doc(postId);
+                              await documentRef.update({
+                                'reported': reported,
+                              });
+                              break;
+                            default:
+                          }
+                        },
+                        itemBuilder: (BuildContext context) =>
+                            <PopupMenuEntry<String>>[
+                          if (userProfile["id"] != document["owner"])
+                            PopupMenuItem<String>(
+                              value: 'Block User',
+                              child: Text(
+                                'Block User',
+                              ),
+                            ),
+                          PopupMenuItem<String>(
+                            value: 'Report Post',
+                            child: Text(
+                              'Report Post',
+                            ),
+                          ),
+                          PopupMenuItem<String>(
+                            value: 'Share Post',
+                            child: Text(
+                              'Share Post',
+                            ),
+                          ),
+                        ],
+                        icon: Icon(Icons.more_horiz),
+                      ),
                       title: Text(document["title"],
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
@@ -138,18 +233,19 @@ class ForumPostScreen extends StatelessWidget {
                           Row(children: [
                             GestureDetector(
                               child: Icon(Icons.share_outlined),
+                              onTap: () {
+                                Functions.sharePost(
+                                  document["title"],
+                                  document["post"],
+                                  "https://www.elea.com",
+                                );
+                              },
                             ),
                             SizedBox(width: 6.0),
                             GestureDetector(
                               child: Icon(Icons.reply_outlined),
-                              onTap: () async {
-                                final userRef = FirebaseFirestore.instance
-                                    .collection('users')
-                                    .doc(document["owner"]);
-                                Map<String, dynamic>? user =
-                                    (await userRef.get()).data();
-                                Functions.showConnectionRequestPopup(
-                                    context, user!);
+                              onTap: () {
+                                _showConnectionRequestPopup(document);
                               },
                             ),
                           ]),

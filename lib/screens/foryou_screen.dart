@@ -165,6 +165,25 @@ class _ForYouScreenState extends State<ForYouScreen> {
     await _loadPosts(isRefresh: true);
   }
 
+  Future<void> _showConnectionRequestPopup(
+      DocumentSnapshot<Object?> document) async {
+    // Fetch the user data asynchronously
+    final userRef =
+        FirebaseFirestore.instance.collection('users').doc(document["owner"]);
+    Map<String, dynamic>? user = (await userRef.get()).data();
+
+    // Check if user data is fetched successfully
+    if (user != null) {
+      user["id"] = document["owner"];
+
+      // Ensure that the widget is still mounted before using context
+      if (mounted) {
+        Functions.showConnectionRequestPopup(
+            context, user); // Use context safely here
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -327,6 +346,42 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                       });
                                       Functions.showToast("User blocked.");
                                       break;
+                                    case 'Share Post':
+                                      Functions.sharePost(
+                                        document["title"],
+                                        document["post"],
+                                        "https://www.elea.com",
+                                      );
+                                      break;
+                                    case 'Report Post':
+                                      final userId = FirebaseAuth
+                                          .instance.currentUser!.uid;
+                                      Map<String, dynamic>? documentData =
+                                          document.data()
+                                              as Map<String, dynamic>?;
+                                      List<dynamic> reported =
+                                          documentData?["reported"] ?? [];
+                                      bool alreadyReported = reported.any(
+                                          (report) =>
+                                              report['userId'] == userId);
+                                      Functions.showToast("Post reported.");
+                                      if (alreadyReported) {
+                                        print(
+                                            'User has already reported this document.');
+                                        return;
+                                      }
+                                      reported.add({
+                                        "userId": userId,
+                                        "timestamp": Timestamp.now(),
+                                      });
+                                      DocumentReference documentRef =
+                                          FirebaseFirestore.instance
+                                              .collection('posts')
+                                              .doc(document.id);
+                                      await documentRef.update({
+                                        'reported': reported,
+                                      });
+                                      break;
                                     default:
                                   }
                                 },
@@ -341,11 +396,17 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                       ),
                                     ),
                                   PopupMenuItem<String>(
-                                    value: 'Option 2',
+                                    value: 'Report Post',
                                     child: Text(
-                                      'Option 2',
+                                      'Report Post',
                                     ),
-                                  )
+                                  ),
+                                  PopupMenuItem<String>(
+                                    value: 'Share Post',
+                                    child: Text(
+                                      'Share Post',
+                                    ),
+                                  ),
                                 ],
                                 icon: Icon(Icons.more_horiz),
                               ),
@@ -458,18 +519,19 @@ class _ForYouScreenState extends State<ForYouScreen> {
                                 Row(children: [
                                   GestureDetector(
                                     child: Icon(Icons.share_outlined),
+                                    onTap: () {
+                                      Functions.sharePost(
+                                        document["title"],
+                                        document["post"],
+                                        "https://www.elea.com",
+                                      );
+                                    },
                                   ),
                                   SizedBox(width: 6.0),
                                   GestureDetector(
                                     child: Icon(Icons.reply_outlined),
-                                    onTap: () async {
-                                      final userRef = FirebaseFirestore.instance
-                                          .collection('users')
-                                          .doc(document["owner"]);
-                                      Map<String, dynamic>? user =
-                                          (await userRef.get()).data();
-                                      Functions.showConnectionRequestPopup(
-                                          context, user!);
+                                    onTap: () {
+                                      _showConnectionRequestPopup(document);
                                     },
                                   ),
                                 ]),

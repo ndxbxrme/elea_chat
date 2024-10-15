@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'components/avatar_widget.dart';
 
@@ -194,5 +195,10 @@ class Functions {
         );
       },
     );
+  }
+
+  static void sharePost(String title, String content, String url) {
+    String textToShare = "$title\n\n$content\n\nRead more at: $url";
+    Share.share(textToShare);
   }
 }
